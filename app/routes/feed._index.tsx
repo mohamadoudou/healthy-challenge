@@ -8,7 +8,7 @@ export const loader = async () => {
   });
 };
 
-export default function feed() {
+export default function Feed() {
   const { records } = useLoaderData<typeof loader>();
   return (
     <main>

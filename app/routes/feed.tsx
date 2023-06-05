@@ -1,6 +1,6 @@
 import { Outlet } from "@remix-run/react";
 
-export default function feed() {
+export default function Feed() {
   return (
     <div>
       Feed list

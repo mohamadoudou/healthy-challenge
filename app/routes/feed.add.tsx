@@ -7,7 +7,6 @@ export const action = async ({ request }: ActionArgs) => {
   const name = form.get("name");
   const dateInput = form.get("date");
   const steps = form.get("steps");
-  console.log("type", typeof name, typeof dateInput, typeof steps);
   if (
     typeof name !== "string" ||
     typeof dateInput !== "string" ||
@@ -27,7 +26,7 @@ export const action = async ({ request }: ActionArgs) => {
   return redirect("/feed");
 };
 
-export default function add() {
+export default function Add() {
   const actionData = useActionData<typeof action>();
 
   return (
