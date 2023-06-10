@@ -7,7 +7,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const form = await request.formData();
   const name = form.get("name");
   const username = form.get("username");
-  const { challengeId } = params || {};
+  const { challengeId } = params;
 
   if (typeof name !== "string" || typeof username !== "string") {
     throw new Error("Form not submitted correctly.");

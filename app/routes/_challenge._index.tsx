@@ -33,7 +33,7 @@ export default function Challenge() {
               </p>
               <p>Name: {name}</p>
               <h5>
-                <Link to="feed">See Records</Link>
+                <Link to={`challenge/${id}/record`}>See Records</Link>
               </h5>
               <h5>
                 <Link to={`challenge/${id}/participants`}>

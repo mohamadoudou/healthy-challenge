@@ -11,12 +11,16 @@ datasource db {
 }
 
 model Record {
-  id        String   @id @default(uuid())
-  name      String
-  date      String
-  steps     Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String    @id @default(uuid())
+  date        String
+  points      String
+  prove       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  author      User      @relation(fields: [authorId], references: [id])
+  authorId    String
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId String
 }
 
 model User {
@@ -26,6 +30,7 @@ model User {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   ChallengeOnUser ChallengeOnUser[]
+  records         Record[]
 }
 
 model Challenge {
@@ -37,6 +42,7 @@ model Challenge {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   ChallengeOnUser ChallengeOnUser[]
+  records         Record[]
 }
 
 model ChallengeOnUser {

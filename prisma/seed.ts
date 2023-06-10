@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 const db = new PrismaClient();
 
-const getRecords = () => [
-  { name: "Nafi", date: "1650931200000", steps: 10000 },
-  { name: "Moctar", date: "1850931200000", steps: 15000 },
-];
+// const getRecords = () => [
+//   { name: "Nafi", date: "1650931200000", points: 10000 },
+//   { name: "Moctar", date: "1850931200000", points: 15000 },
+// ];
 
 const getUsers = () => [
   {
@@ -25,7 +25,7 @@ const getChallenges = () => [
     endDate: "1950931200000",
   },
   {
-    name: "    Swimming",
+    name: "Swimming",
     description: "Swim 100m a day for a week",
     startDate: "1650931200000",
     endDate: "1950931200000",
@@ -40,11 +40,11 @@ const getChallenges = () => [
 // ];
 
 async function seed() {
-  await Promise.all(
-    getRecords().map((record) => {
-      return db.record.create({ data: record });
-    })
-  );
+  // await Promise.all(
+  //   getRecords().map((record) => {
+  //     return db.record.create({ data: record });
+  //   })
+  // );
   await Promise.all(
     getUsers().map((user) => {
       return db.user.create({ data: user });
