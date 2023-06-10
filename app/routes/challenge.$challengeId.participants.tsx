@@ -1,29 +1,43 @@
 import { User } from "@prisma/client";
-import { ActionFunction, LoaderArgs, json, redirect } from "@remix-run/node";
+import { ActionArgs, LoaderArgs, json, redirect } from "@remix-run/node";
 import { useActionData, useLoaderData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
+import { badRequest } from "~/utils/request.server";
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const action= async ({ request, params }:ActionArgs) => {
   const form = await request.formData();
   const name = form.get("name");
   const username = form.get("username");
   const { challengeId } = params;
 
-  if (typeof name !== "string" || typeof username !== "string") {
-    throw new Error("Form not submitted correctly.");
+  if (typeof name !== "string" || typeof username !== "string" || !name || !username) {
+    return badRequest({formError: "Form not submitted correctly.",})
   }
 
   let user: User | null = null;
 
   user = await db.user.findUnique({ where: { username } });
 
+// Create a user and then add him to the challenge when do user doesn't exist in the system
   if (!user) {
     user = await db.user.create({ data: { name, username } });
   }
 
   if (!challengeId || !user) {
-    throw new Error("Ups, Please try again");
+    return badRequest({formError: "Ups, Please try again",})
   }
+
+const isChallengeExist= await db.challenge.findUnique({
+  where: {
+      id:challengeId,
+  },
+});
+  
+
+if(!isChallengeExist){
+  return badRequest({formError: "This Challenge does not exist",})
+}
+
 
   const isUserExistInTheChallenge = await db.challengeOnUser.findUnique({
     where: {
@@ -35,10 +49,11 @@ export const action: ActionFunction = async ({ request, params }) => {
   });
 
   if (isUserExistInTheChallenge) {
-    throw new Error(
-      "Ups, This User with username '' already added to the challenge"
-    );
+    return badRequest({formError:  "Ups, This User already added to the challenge"
+    })
   }
+
+
 
   await db.challengeOnUser.create({ data: { userId: user.id, challengeId } });
 
@@ -56,7 +71,6 @@ export const loader = async ({ params }: LoaderArgs) => {
 };
 
 export default function AddParticipants() {
-  // Todo: will be use to handle errors
   const actionData = useActionData<typeof action>();
   const { participants } = useLoaderData<typeof loader>();
 
@@ -87,6 +101,7 @@ export default function AddParticipants() {
             <input name="username" type="text" />
           </label>
         </div>
+        {actionData?.formError&&<p style={{color:'red'}}>{actionData.formError}</p>}
         <div>
           <button type="submit">ADD PARTICIPANT</button>
         </div>

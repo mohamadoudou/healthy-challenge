@@ -1,5 +1,7 @@
 import { ActionArgs, redirect } from "@remix-run/node";
+import { useActionData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
+import { badRequest } from "~/utils/request.server";
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
@@ -10,11 +12,11 @@ export const action = async ({ request }: ActionArgs) => {
 
   if (
     typeof name !== "string" ||
-    typeof description !== "string" ||
+  typeof description !== "string" ||
     typeof startDateInput !== "string" ||
-    typeof endDateInput !== "string"
+    typeof endDateInput !== "string"|| !name|| !description|| !startDateInput|| !endDateInput
   ) {
-    throw new Error("Form not submitted correctly.");
+    return badRequest({formError: "Form not submitted correctly.",})
   }
 
   const startDate = new Date(startDateInput);
@@ -37,6 +39,8 @@ export const action = async ({ request }: ActionArgs) => {
 };
 
 export default function Add() {
+ const actionData=useActionData<typeof action>()
+
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <form method="post">
@@ -61,9 +65,10 @@ export default function Add() {
         <div>
           <label>
             Description
-            <input name="description" type="text" />
+            <textarea name="description" placeholder="Add a description to your challenge ..."/>
           </label>
         </div>
+        {actionData?.formError&&<p style={{color:'red'}}>{actionData.formError}</p>}
         <div>
           <button type="submit">ADD</button>
         </div>
