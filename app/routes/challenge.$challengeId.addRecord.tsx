@@ -2,6 +2,7 @@ import { User } from "@prisma/client";
 import {  ActionFunction, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
+import { badRequest } from "~/utils/request.server";
 
 export const action:ActionFunction = async ({ request, params }) => {
   const form = await request.formData();
@@ -15,9 +16,9 @@ export const action:ActionFunction = async ({ request, params }) => {
     typeof name !== "string" ||
     typeof dateInput !== "string" ||
     typeof points !== "string"||
-    typeof username !== "string"
+    typeof username !== "string" || !name || !dateInput || !points || !username
   ) {
-    throw new Error("Form not submitted correctly.");
+    return badRequest({formError: "Form not submitted correctly.",})
   }
 
   let user: User | null = null;
@@ -28,7 +29,7 @@ export const action:ActionFunction = async ({ request, params }) => {
   // Get the timestamp in milliseconds using the getTime() method
   const timestamp = date.getTime();
   if (!user || !challengeId) {
-    throw new Error("Ups the user or the challenge does not exist");
+    return badRequest({formError:"Ups the user or the challenge does not exist"});
   }
 
   const isUserExistInTheChallenge = await db.challengeOnUser.findUnique({
@@ -40,13 +41,23 @@ export const action:ActionFunction = async ({ request, params }) => {
     },
   });
 
+  const isChallengeExist= await db.challenge.findUnique({
+    where: {
+        id:challengeId,
+    },
+  });  
+  
+  if(!isChallengeExist){
+    return badRequest({formError: "This Challenge does not exist",})
+  }
+
   if (isUserExistInTheChallenge) {
     const fields = { date: String(timestamp), points,challengeId,authorId:user.id };
     await db.record.create({ data: fields });
   }else{
-    throw new Error(
+    return badRequest({formError:
       "Ups, This User with username '' does not added to this challenge"
-    );
+  });
   }
 
   return redirect(`/challenge/${challengeId}/record`);
@@ -83,6 +94,7 @@ export default function Add() {
             <input name="points" type="text" />
           </label>
         </div>
+        {actionData?.formError&&<p style={{color:'red'}}>{actionData.formError}</p>}
         <div>
           <button type="submit">ADD</button>
         </div>
