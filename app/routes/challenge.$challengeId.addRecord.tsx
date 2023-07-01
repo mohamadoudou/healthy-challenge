@@ -10,6 +10,7 @@ import { useActionData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 import { badRequest } from "~/utils/request.server";
 import { uploadImageToCloudinary } from "~/utils/cloudinaryConfig.server";
+import { requireUserId } from "~/utils/session.server";
 
 export const action: ActionFunction = async ({ request, params }) => {
   const uploadHandler = unstable_composeUploadHandlers(
@@ -30,35 +31,31 @@ export const action: ActionFunction = async ({ request, params }) => {
     uploadHandler
   );
 
-  const name = formData.get("name");
   const dateInput = formData.get("date");
   const points = formData.get("points");
-  const username = formData.get("username");
   const prove = formData.get("prove");
   const { challengeId } = params;
 
   if (
-    typeof name !== "string" ||
     typeof dateInput !== "string" ||
     typeof points !== "string" ||
-    typeof username !== "string" ||
     typeof prove !== "string" ||
-    !name ||
     !dateInput ||
     !points ||
-    !username ||
     !prove
   ) {
     return badRequest({ formError: "Form not submitted correctly." });
   }
 
+  const userId = await requireUserId(request);
   let user: User | null = null;
 
-  user = await db.user.findUnique({ where: { username } });
+  user = await db.user.findUnique({ where: { id: userId } });
   const date = new Date(dateInput);
 
   // Get the timestamp in milliseconds using the getTime() method
   const timestamp = date.getTime();
+
   if (!user || !challengeId) {
     return badRequest({
       formError: "Ups the user or the challenge does not exist",
@@ -95,8 +92,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     await db.record.create({ data: fields });
   } else {
     return badRequest({
-      formError:
-        "Ups, This User with username '' does not added to this challenge",
+      formError: "Ups, Your are not a particitant of this challenge.",
     });
   }
 
@@ -114,18 +110,6 @@ export default function Add() {
           <label>
             Choose Date
             <input name="date" type="date" />
-          </label>
-        </div>
-        <div>
-          <label>
-            Name
-            <input name="name" type="text" />
-          </label>
-        </div>
-        <div>
-          <label>
-            Username
-            <input name="username" type="text" />
           </label>
         </div>
         <div>

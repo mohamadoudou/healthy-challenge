@@ -1,14 +1,16 @@
 import { Link, useLoaderData } from "@remix-run/react";
-import { LinksFunction, json } from "@remix-run/node";
+import { LinksFunction, LoaderArgs, json } from "@remix-run/node";
 
 import stylesUrl from "~/styles/index.css";
 import { db } from "~/utils/db.server";
+import { requireUserId } from "~/utils/session.server";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
 ];
 
-export const loader = async () => {
+export const loader = async ({ request }: LoaderArgs) => {
+  await requireUserId(request);
   return json({
     challenges: await db.challenge.findMany(),
   });

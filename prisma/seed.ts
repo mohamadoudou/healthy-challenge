@@ -10,10 +10,12 @@ const getUsers = () => [
   {
     name: "Moctar",
     username: "moctar",
+    password: "moctar",
   },
   {
     name: "Mohamadou",
     username: "mohamadou",
+    password: "mohamadou",
   },
 ];
 
