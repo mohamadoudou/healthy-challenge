@@ -1,10 +1,15 @@
 import { User } from "@prisma/client";
-import { ActionFunction } from "@remix-run/node";
-import { useActionData } from "@remix-run/react";
+import { ActionFunction, LinksFunction } from "@remix-run/node";
+import { Link, useActionData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 import bcrypt from "bcryptjs";
 import { badRequest } from "~/utils/request.server";
 import { createUserSession } from "~/utils/session.server";
+import stylesUrl from "~/styles/signup.css";
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: stylesUrl },
+];
 
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
@@ -39,47 +44,60 @@ export const action: ActionFunction = async ({ request }) => {
   const user = await db.user.create({
     data: { email, name, username, password: passwordHash },
   });
-  
- return createUserSession(user.id,'/')
+
+  if (!user) {
+    return badRequest({
+      formError: "Ups, Something when wrong please try again",
+    });
+  }
+
+  return createUserSession(user.id, "/");
 };
 
-export default function Add() {
+export default function SignUp() {
   const actionData = useActionData<typeof action>();
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <div>Registration</div>
-      <form method="post">
-        <div>
-          <label>
-            Email
-            <input name="email" type="email" />
-          </label>
+    <div className="registration_page">
+      <form method="post" className="registration_form">
+        <div className="logo">
+          <h3>Healty Challenge </h3>
+          <p>Keep Your Team Fit</p>
         </div>
-        <div>
-          <label>
-            Name
-            <input name="name" type="text" />
-          </label>
-        </div>
-        <div>
-          <label>
-            Username
-            <input name="username" type="text" />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password
-            <input name="password" type="password" />
-          </label>
-        </div>
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          className="input"
+        />
+        <input
+          name="name"
+          type="text"
+          placeholder="Full Name"
+          className="input"
+        />
+        <input
+          name="username"
+          type="text"
+          placeholder="Username"
+          className="input"
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          className="input"
+        />
         {actionData?.formError && (
           <p style={{ color: "red" }}>{actionData.formError}</p>
         )}
-        <div>
-          <button type="submit">Register</button>
-        </div>
+
+        <button type="submit" className="button">
+          Sign Up
+        </button>
+        <p className="login">
+          Have an account? <Link to={`/login`}>Log in</Link>
+        </p>
       </form>
     </div>
   );

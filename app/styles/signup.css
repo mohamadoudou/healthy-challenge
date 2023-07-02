@@ -1,0 +1,114 @@
+:root {
+  --primary-color: #e74c3c;
+  --secondary-bg-color: #34495e;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Oswald", sans-serif;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h3,
+p {
+  margin: 0px;
+  padding: 0px;
+}
+
+.registration_page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("app/assets/premium_photo-1664304729791-824564834f0f.png")
+    fixed center no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+.registration_form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background-color: whitesmoke;
+  box-shadow: 0 8px 16px 0 whitesmoke;
+  transition: 0.3s;
+  width: 30%;
+  border-radius: 5px;
+  padding: 2rem 1.5rem;
+}
+
+@media only screen and (max-width: 920px) {
+  .registration_form {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .registration_form {
+    width: 100%;
+  }
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo h3 {
+  color: var(--primary-color);
+  font-weight: 300;
+  font-size: 50px;
+}
+
+.logo p {
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  background: var(--secondary-bg-color);
+  font-weight: 400;
+  color: white;
+  padding-left: 5px;
+}
+
+.input {
+  font-size: 16px;
+  letter-spacing: 1px;
+  border: 0px;
+  border-radius: 5px;
+  height: 40px;
+  padding: 0.2rem 0.75rem;
+}
+
+.button {
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  background: var(--secondary-bg-color);
+  font-weight: 400;
+  color: white;
+  padding-left: 5px;
+  margin-top: 4rem;
+  border: 0px;
+  border-radius: 5px;
+  height: 40px;
+}
+
+.login {
+  margin-top: 4rem;
+  font-size: 16px;
+}
+
+.login a {
+  font-weight: 600;
+  color: var(--primary-color);
+}

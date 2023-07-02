@@ -1,4 +1,10 @@
+import { LinksFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
+import stylesUrl from "~/styles/challenge.css";
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: stylesUrl },
+];
 
 export default function Challenge() {
   return (
