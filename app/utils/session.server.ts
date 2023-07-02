@@ -31,6 +31,7 @@ function getUserSession(request: Request) {
 export async function getUserId(request: Request) {
   const session = await getUserSession(request);
   const userId = session.get("userId");
+
   if (!userId || typeof userId !== "string") {
     return null;
   }
@@ -52,6 +53,7 @@ export async function requireUserId(
 
 export async function createUserSession(userId: string, redirectTo: string) {
   const session = await cookieSessionStorage.getSession();
+
   session.set("userId", userId);
   return redirect(redirectTo, {
     headers: {

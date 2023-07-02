@@ -1,7 +1,11 @@
-import { LinksFunction, LoaderArgs } from "@remix-run/node";
+import { LinksFunction, LoaderArgs, redirect } from "@remix-run/node";
 import { Link, useActionData } from "@remix-run/react";
 import { badRequest } from "~/utils/request.server";
-import { createUserSession, loginUser } from "~/utils/session.server";
+import {
+  createUserSession,
+  getUserId,
+  loginUser,
+} from "~/utils/session.server";
 import stylesUrl from "~/styles/login.css";
 import {
   validatePassword,
@@ -53,6 +57,15 @@ export const action = async ({ request }: LoaderArgs) => {
   }
 
   return createUserSession(user.id, "/");
+};
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const userId = await getUserId(request);
+
+  if (userId) {
+    return redirect("/");
+  }
+  return null;
 };
 
 export default function Login() {

@@ -12,11 +12,15 @@ export const action = async ({ request }: ActionArgs) => {
 
   if (
     typeof name !== "string" ||
-  typeof description !== "string" ||
+    typeof description !== "string" ||
     typeof startDateInput !== "string" ||
-    typeof endDateInput !== "string"|| !name|| !description|| !startDateInput|| !endDateInput
+    typeof endDateInput !== "string" ||
+    !name ||
+    !description ||
+    !startDateInput ||
+    !endDateInput
   ) {
-    return badRequest({formError: "Form not submitted correctly.",})
+    return badRequest({ formError: "Form not submitted correctly." });
   }
 
   const startDate = new Date(startDateInput);
@@ -39,7 +43,7 @@ export const action = async ({ request }: ActionArgs) => {
 };
 
 export default function Add() {
- const actionData=useActionData<typeof action>()
+  const actionData = useActionData<typeof action>();
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
@@ -65,10 +69,15 @@ export default function Add() {
         <div>
           <label>
             Description
-            <textarea name="description" placeholder="Add a description to your challenge ..."/>
+            <textarea
+              name="description"
+              placeholder="Add a description to your challenge ..."
+            />
           </label>
         </div>
-        {actionData?.formError&&<p style={{color:'red'}}>{actionData.formError}</p>}
+        {actionData?.formError && (
+          <p style={{ color: "red" }}>{actionData.formError}</p>
+        )}
         <div>
           <button type="submit">ADD</button>
         </div>

@@ -68,6 +68,7 @@ export const action = async ({ request, params }: ActionArgs) => {
 
 export const loader = async ({ request, params }: LoaderArgs) => {
   await requireUserId(request);
+
   return json({
     participants: await db.user.findMany({
       where: {
