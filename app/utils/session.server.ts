@@ -62,8 +62,12 @@ export async function createUserSession(userId: string, redirectTo: string) {
 
 export async function loginUser(usernameOrEmail: string, password: string) {
   let user: User | null = null;
-  // TODO: add validation for username or email check
-  user = await db.user.findUnique({ where: { username: usernameOrEmail } });
+
+  const field = /\@/.test(usernameOrEmail)
+    ? { email: usernameOrEmail }
+    : { username: usernameOrEmail };
+
+  user = await db.user.findUnique({ where: { ...field } });
 
   if (!user) {
     return null;
@@ -80,6 +84,7 @@ export async function loginUser(usernameOrEmail: string, password: string) {
 
 export async function logoutUser(request: Request) {
   const session = await getUserSession(request);
+
   return redirect("/login", {
     headers: {
       "Set-Cookie": await cookieSessionStorage.destroySession(session),
