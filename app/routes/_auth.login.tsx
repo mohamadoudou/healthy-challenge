@@ -1,14 +1,18 @@
-import { ActionFunction, LinksFunction } from "@remix-run/node";
+import { LinksFunction, LoaderArgs } from "@remix-run/node";
 import { Link, useActionData } from "@remix-run/react";
 import { badRequest } from "~/utils/request.server";
 import { createUserSession, loginUser } from "~/utils/session.server";
 import stylesUrl from "~/styles/login.css";
+import {
+  validatePassword,
+  validateUsernameEmail,
+} from "~/utils/validation.server";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
 ];
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: LoaderArgs) => {
   const form = await request.formData();
   const usernameOrEmail = form.get("usernameOrEmail");
   const password = form.get("password");
@@ -19,7 +23,23 @@ export const action: ActionFunction = async ({ request }) => {
     !usernameOrEmail ||
     !password
   ) {
-    return badRequest({ formError: "Form not submitted correctly." });
+    return badRequest({
+      formError: "Form not submitted correctly.",
+      fieldErrors: null,
+    });
+  }
+
+  const fieldErrors = {
+    usernameOrEmail: validateUsernameEmail(usernameOrEmail),
+    password: validatePassword(password),
+  };
+
+  if (Object.values(fieldErrors).some(Boolean)) {
+    return badRequest({
+      fieldErrors,
+      fields: { usernameOrEmail, password },
+      formError: null,
+    });
   }
 
   const user = await loginUser(usernameOrEmail, password);
@@ -51,12 +71,20 @@ export default function Login() {
           placeholder="Username or Email"
           className="input"
         />
+        {actionData?.fieldErrors && (
+          <p style={{ color: "red" }}>
+            {actionData.fieldErrors.usernameOrEmail}
+          </p>
+        )}
         <input
           name="password"
           type="password"
           placeholder="Password"
           className="input"
         />
+        {actionData?.fieldErrors && (
+          <p style={{ color: "red" }}>{actionData.fieldErrors.password}</p>
+        )}
         {actionData?.formError && (
           <p style={{ color: "red" }}>{actionData.formError}</p>
         )}
