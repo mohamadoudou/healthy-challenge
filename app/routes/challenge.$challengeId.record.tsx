@@ -1,6 +1,7 @@
 import { LoaderArgs, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
+import { formatDate } from "~/utils/formatter";
 
 export const loader = async ({ params }: LoaderArgs) => {
   const { challengeId } = params;
@@ -22,10 +23,10 @@ export default function Feed() {
         {records.map(({ id, authorId, date, points, prove }) => {
           return (
             <li key={id}>
-              <p>Date: {new Date(Number(date)).toString()}</p>
+              <p>Date: {formatDate(date)}</p>
               <p>Name: {authorId}</p>
               <p>Steps: {points}</p>
-              {!!prove && <img src={prove} />}
+              {!!prove && <img src={prove} width={400} height={400} />}
             </li>
           );
         })}

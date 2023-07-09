@@ -3,45 +3,46 @@ import { LinksFunction, LoaderArgs, json } from "@remix-run/node";
 
 import stylesUrl from "~/styles/index.css";
 import { db } from "~/utils/db.server";
-import { requireUserId } from "~/utils/session.server";
+import { formatDate } from "~/utils/formatter";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
 ];
 
-export const loader = async ({ request }: LoaderArgs) => {
-  await requireUserId(request);
+export const loader = async () => {
   return json({
-    challenges: await db.challenge.findMany(),
+    records: await db.record.findMany({
+      include: {
+        author: {
+          select: {
+            username: true,
+            name: true,
+          },
+        },
+      },
+    }),
   });
 };
 
 export default function Challenge() {
-  const { challenges } = useLoaderData<typeof loader>();
+  const { records } = useLoaderData<typeof loader>();
 
   return (
     <section style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h5>
-        <Link to="challenge/add">Create a Challenge for your team</Link>
+        <Link to="/challenge/add">Create a Challenge for your team</Link>
       </h5>
       <div>list of your Team Challenges</div>
       <ul>
-        {challenges.map(({ id, name, startDate, endDate }) => {
+        {records.map(({ id, author, date, points, prove }) => {
           return (
             <li key={id}>
+              <p>Date: {formatDate(date)}</p>
               <p>
-                Date: {new Date(Number(startDate)).toString()} - Date:
-                {new Date(Number(endDate)).toString()}
+                Name: {author.name} @{author.username}
               </p>
-              <p>Name: {name}</p>
-              <h5>
-                <Link to={`challenge/${id}/record`}>See Records</Link>
-              </h5>
-              <h5>
-                <Link to={`challenge/${id}/participants`}>
-                  View and Add participants
-                </Link>
-              </h5>
+              <p>Steps: {points}</p>
+              {!!prove && <img src={prove} width={500} height={500} />}
             </li>
           );
         })}

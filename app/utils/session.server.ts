@@ -93,3 +93,21 @@ export async function logoutUser(request: Request) {
     },
   });
 }
+
+export async function getUser(request: Request) {
+  const userId = await getUserId(request);
+  if (typeof userId !== "string") {
+    return null;
+  }
+
+  const user = await db.user.findUnique({
+    select: { id: true, username: true },
+    where: { id: userId },
+  });
+
+  if (!user) {
+    throw logoutUser(request);
+  }
+
+  return user;
+}
