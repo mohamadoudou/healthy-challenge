@@ -21,7 +21,9 @@ export default function Challenge() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <header>
-        <h1>Healthy Challenge</h1>
+        <h1 className="text-3xl text-red-500 font-bold underline">
+          Healthy Challenge
+        </h1>
       </header>
       <main className="main_container">
         <aside>

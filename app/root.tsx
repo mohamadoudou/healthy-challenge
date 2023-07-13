@@ -10,9 +10,11 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import type { PropsWithChildren } from "react";
+import stylesheet from "~/tailwind.css";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  { rel: "stylesheet", href: stylesheet },
 ];
 
 function Document({
