@@ -30,11 +30,8 @@ export default function Challenge() {
             <li>
               <Link to="/challenge">Home </Link>
             </li>
-            <li>Profile</li>
             <li>
-              <Link to="/challenge/add">
-                Create a new Challenge to keep you team healthy
-              </Link>
+              <Link to="/challenge/add">Create new Challenge</Link>
             </li>
           </ul>
         </aside>

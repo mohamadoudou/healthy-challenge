@@ -10,6 +10,11 @@ export const loader = async ({ params }: LoaderArgs) => {
       where: {
         challengeId,
       },
+      include: {
+        author: {
+          select: { username: true, name: true },
+        },
+      },
     }),
     challengeId,
   });
@@ -20,11 +25,13 @@ export default function Feed() {
   return (
     <main>
       <ul>
-        {records.map(({ id, authorId, date, points, prove }) => {
+        {records.map(({ id, author, date, points, prove }) => {
           return (
             <li key={id}>
               <p>Date: {formatDate(date)}</p>
-              <p>Name: {authorId}</p>
+              <p>
+                Name: {author.name} @{author.username}
+              </p>
               <p>Steps: {points}</p>
               {!!prove && <img src={prove} width={400} height={400} />}
             </li>

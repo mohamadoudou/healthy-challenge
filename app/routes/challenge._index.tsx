@@ -11,12 +11,15 @@ export const links: LinksFunction = () => [
 
 export const loader = async () => {
   return json({
-    records: await db.record.findMany({
+    challenges: await db.challenge.findMany({
       include: {
-        author: {
+        records: {
           select: {
-            username: true,
-            name: true,
+            id: true,
+            date: true,
+            points: true,
+            prove: true,
+            author: true,
           },
         },
       },
@@ -25,24 +28,32 @@ export const loader = async () => {
 };
 
 export default function Challenge() {
-  const { records } = useLoaderData<typeof loader>();
+  const { challenges } = useLoaderData<typeof loader>();
 
   return (
     <section style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h5>
-        <Link to="/challenge/add">Create a Challenge for your team</Link>
-      </h5>
       <div>list of your Team Challenges</div>
       <ul>
-        {records.map(({ id, author, date, points, prove }) => {
+        {challenges.map(({ id, name, startDate, endDate, records }) => {
           return (
             <li key={id}>
-              <p>Date: {formatDate(date)}</p>
-              <p>
-                Name: {author.name} @{author.username}
-              </p>
-              <p>Steps: {points}</p>
-              {!!prove && <img src={prove} width={500} height={500} />}
+              Challenge: {name}
+              Challenge Period: from {formatDate(startDate)} to{" "}
+              {formatDate(endDate)}
+              <ul>
+                {records.map(({ id, author, date, points, prove }) => {
+                  return (
+                    <li key={id}>
+                      <p>Date: {formatDate(date)}</p>
+                      <p>
+                        Name: {author.name} @{author.username}
+                      </p>
+                      <p>Steps: {points}</p>
+                      {!!prove && <img src={prove} width={500} height={500} />}
+                    </li>
+                  );
+                })}
+              </ul>
             </li>
           );
         })}

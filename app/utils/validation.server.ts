@@ -9,12 +9,12 @@ export function validateUsernameEmail(field: string) {
     // Validate username
     let stripped = field.replace(/[\(\)\.\-\ ]/g, "");
 
-    if (stripped.length <= 6) {
-      return "Username much be greater than 6 characters";
+    if (stripped.length <= 4) {
+      return "Username much be greater than 4 characters";
     }
   }
 }
 
 export function validatePassword(field: string) {
-  return field.length <= 6 && "Password must be more than 6 characters";
+  return field.length <= 4 && "Password must be more than 4 characters";
 }

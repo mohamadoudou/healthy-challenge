@@ -7,16 +7,10 @@ import { requireUserId } from "~/utils/session.server";
 
 export const action = async ({ request, params }: ActionArgs) => {
   const form = await request.formData();
-  const name = form.get("name");
   const username = form.get("username");
   const { challengeId } = params;
 
-  if (
-    typeof name !== "string" ||
-    typeof username !== "string" ||
-    !name ||
-    !username
-  ) {
+  if (typeof username !== "string" || !username) {
     return badRequest({ formError: "Form not submitted correctly." });
   }
 
@@ -97,12 +91,6 @@ export default function AddParticipants() {
       </div>
 
       <form method="post">
-        <div>
-          <label>
-            Name
-            <input name="name" type="text" />
-          </label>
-        </div>
         <div>
           <label>
             Username
