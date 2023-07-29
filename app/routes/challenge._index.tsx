@@ -31,7 +31,9 @@ export default function Challenge() {
   const { challenges } = useLoaderData<typeof loader>();
 
   return (
-    <section style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+    <section
+    // style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}
+    >
       <div>list of your Team Challenges</div>
       <ul>
         {challenges.map(({ id, name, startDate, endDate, records }) => {

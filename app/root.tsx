@@ -30,7 +30,7 @@ function Document({
         <title>{title}</title>
         <Links />
       </head>
-      <body>
+      <body className="h-screen">
         {children}
         <ScrollRestoration />
         <Scripts />
