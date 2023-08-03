@@ -34,10 +34,22 @@ export default function Challenge() {
     <section>
       {challenges.map(({ id, name, startDate, endDate, records }) => {
         return (
-          <div>
+          <div key={id} className="border-l border-r border-gray-600">
+            <div className="Challenge p-1 h-10 self-stretch pb-1 justify-start items-center gap-1 inline-flex border-t border-b w-full border-gray-600">
+              <div className="DevonLane text-white text-base font-bold">
+                {name}
+              </div>
+              <div className=" text-slate-500 text-base font-normal">· </div>
+              <div className="S text-slate-500 text-base font-medium">
+                From {formatDate(startDate)} to {formatDate(endDate)}
+              </div>
+            </div>
             {records.map(({ id, author, date, points, prove }) => {
               return (
-                <div className="Tweet h-96 px-px flex-col justify-start items-start gap-2 flex">
+                <div
+                  key={id}
+                  className="Tweet h-96 px-px flex-col justify-start items-start gap-2 flex"
+                >
                   <div className="Divider h-px justify-center items-center inline-flex">
                     <div className="Divider h-px bg-gray-200" />
                   </div>
@@ -45,7 +57,7 @@ export default function Challenge() {
                     <div className="Side w-12 self-stretch justify-start items-start flex">
                       <div className="AvatarMedium w-12 h-12 pr-px pt-px rounded-full justify-center items-center flex">
                         <img
-                          className="ProfilePicture w-12 h-12"
+                          className="ProfilePicture w-12 h-12 rounded-full"
                           src="https://via.placeholder.com/48x48"
                         />
                       </div>
@@ -53,32 +65,34 @@ export default function Challenge() {
                     <div className="Main flex-col justify-start items-start inline-flex">
                       <div className="User self-stretch pb-1 justify-start items-center gap-1 inline-flex">
                         <div className="DevonLane text-white text-base font-bold">
-                          Devon Lane
+                          {author.name}
                         </div>
                         <div className="Marcelosalomao text-slate-500 text-base font-medium">
-                          @johndue
+                          @{author.name.toLowerCase()}
                         </div>
                         <div className=" text-slate-500 text-base font-normal">
                           ·{" "}
                         </div>
                         <div className="S text-slate-500 text-base font-medium">
-                          23s
+                          {formatDate(date)}
                         </div>
                       </div>
                       <div className="Content self-stretch justify-start items-start gap-2.5 inline-flex">
                         <div className="HoldOnINeedAtLeastAFewMinutes grow shrink basis-0 text-white text-base font-medium">
-                          Tom is in a big hurry.
+                          Steps: {points}
                         </div>
                       </div>
                       <div className="Media self-stretch py-2.5 rounded-2xl justify-start items-start inline-flex">
-                        <div className="Container h-60 rounded-2xl border border-slate-400 justify-center items-center flex">
-                          <img
-                            className="Placehpolder grow shrink basis-0 h-60"
-                            src="https://via.placeholder.com/509x247"
-                          />
+                        <div className="Container h-60 rounded-2xl justify-center items-center flex">
+                          {!!prove && (
+                            <img
+                              className="Placehpolder grow shrink basis-0 h-60 rounded-2xl"
+                              src={prove}
+                            />
+                          )}
                         </div>
                       </div>
-                      <div className="Actions self-stretch py-1 justify-start items-start inline-flex">
+                      {/* <div className="Actions self-stretch py-1 justify-start items-start inline-flex">
                         <div className="ActionItem h-4 pr-20 justify-start items-start gap-2.5 flex">
                           <div className="DarkThemeCommentDefault w-4 h-4 px-0.5 py-0.5 justify-center items-center inline-flex" />
                           <div className=" text-slate-500 text-xs font-medium">
@@ -105,7 +119,7 @@ export default function Challenge() {
                             61
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                       <div className="ShowThread py-2.5 justify-start items-start inline-flex">
                         <div className="ShowThisThread text-sky-500 text-xs font-medium">
                           Show this thread
