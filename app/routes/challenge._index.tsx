@@ -48,7 +48,7 @@ export default function Challenge() {
               return (
                 <div
                   key={id}
-                  className="Tweet h-96 px-px flex-col justify-start items-start gap-2 flex"
+                  className="Tweet min-h-96 px-px py-4 flex-col justify-start items-start gap-2 flex"
                 >
                   <div className="Divider h-px justify-center items-center inline-flex">
                     <div className="Divider h-px bg-gray-200" />
@@ -83,10 +83,10 @@ export default function Challenge() {
                         </div>
                       </div>
                       <div className="Media self-stretch py-2.5 rounded-2xl justify-start items-start inline-flex">
-                        <div className="Container h-60 rounded-2xl justify-center items-center flex">
+                        <div className="Container h-72 rounded-2xl justify-center items-center flex">
                           {!!prove && (
                             <img
-                              className="Placehpolder grow shrink basis-0 h-60 rounded-2xl"
+                              className="Placehpolder grow shrink basis-0 h-72 rounded-2xl"
                               src={prove}
                             />
                           )}

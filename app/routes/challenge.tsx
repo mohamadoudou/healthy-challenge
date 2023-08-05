@@ -20,7 +20,7 @@ export default function Challenge() {
   const { user, challenges } = useLoaderData<typeof loader>();
   return (
     <>
-      <div className="w-72 px-2.5 flex-col justify-center items-start gap-44 inline-flex overflow-visible">
+      <div className="w-80 px-2.5 flex-col justify-center items-start gap-44 inline-flex overflow-visible">
         <div className="h-96 flex-col justify-center items-start inline-flex">
           <div className="self-stretch h-14 pl-2.5 pr-52 pt-2.5 pb-3 justify-start items-center inline-flex">
             <div className="w-7 self-stretch px-px py-1 justify-center items-center inline-flex" />
@@ -112,7 +112,7 @@ export default function Challenge() {
           )}
         </div>
       </div>
-      <div className="Feed h-screen px-px flex-col justify-start items-start inline-flex overflow-y-scroll pr-4 no-scrollbar">
+      <div className="Feed h-screen pl-1 flex-col justify-start items-start inline-flex overflow-y-scroll pr-4 no-scrollbar">
         <div className="Header h-14">
           <div className="Home left-[15px] top-[15px] text-white text-lg font-bold">
             Home
