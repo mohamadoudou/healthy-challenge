@@ -13,7 +13,7 @@ import type { PropsWithChildren } from "react";
 import stylesheet from "~/globals.css";
 
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  // ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: stylesheet },
 ];
 
@@ -30,7 +30,7 @@ function Document({
         <title>{title}</title>
         <Links />
       </head>
-      <body className="h-screen">
+      <body className="h-screen bg">
         {children}
         <ScrollRestoration />
         <Scripts />

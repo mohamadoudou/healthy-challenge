@@ -1,13 +1,7 @@
 import { LinksFunction, LoaderArgs, json } from "@remix-run/node";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { getUser } from "~/utils/session.server";
-import stylesUrl from "~/styles/challenge.css";
 import { db } from "~/utils/db.server";
-import { formatDate } from "~/utils/formatter";
-
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesUrl },
-];
 
 export const loader = async ({ request }: LoaderArgs) => {
   return json({
@@ -18,6 +12,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 
 export default function Challenge() {
   const { user, challenges } = useLoaderData<typeof loader>();
+
   return (
     <>
       <div className="w-80 px-2.5 flex-col justify-center items-start gap-44 inline-flex overflow-visible">
@@ -66,14 +61,12 @@ export default function Challenge() {
             </div>
           </div>
           <div className="self-stretch py-3.5 flex-col justify-start items-start gap-2.5 inline-flex">
-            <button className="px-16 py-3.5 bg-red-600 rounded-full justify-center items-center gap-2.5 inline-flex">
-              <Link
-                to="/challenge/add"
-                className="text-center text-white text-base font-bold leading-tight"
-              >
-                Add Challenge
-              </Link>
-            </button>
+            <Link
+              to="/challenge/add"
+              className="text-center text-white text-base font-bold leading-tight px-16 py-3.5 bg-red-600 rounded-full justify-center items-center gap-2.5 inline-flex"
+            >
+              Add Challenge
+            </Link>
           </div>
         </div>
 

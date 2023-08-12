@@ -1,7 +1,12 @@
-import { ActionArgs, redirect } from "@remix-run/node";
+import { ActionArgs, LinksFunction, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 import { badRequest } from "~/utils/request.server";
+import stylesUrl from "~/styles/index.css";
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: stylesUrl },
+];
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
@@ -46,7 +51,7 @@ export default function Add() {
   const actionData = useActionData<typeof action>();
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+    <div>
       <form method="post">
         <div>
           <label>
