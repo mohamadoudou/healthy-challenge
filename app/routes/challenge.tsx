@@ -29,7 +29,9 @@ export default function Challenge() {
             </div>
             <div className="w-64 h-14 pl-2.5 pr-32 py-3.5 justify-start items-center gap-5 inline-flex">
               <div className="w-7 h-7 p-0.5 justify-center items-center inline-flex" />
-              <div className="text-white text-lg font-bold">Explore</div>
+              <div className="text-white text-lg font-bold">
+                <Link to="/challenge"> Explore</Link>
+              </div>
             </div>
             <div className="w-64 h-14 pl-2.5 pr-20 py-3.5 justify-start items-center gap-5 inline-flex">
               <div className="w-7 h-7 px-0.5 py-0.5 justify-center items-center inline-flex" />
@@ -107,9 +109,12 @@ export default function Challenge() {
       </div>
       <div className="Feed h-screen pl-1 flex-col justify-start items-start inline-flex overflow-y-scroll pr-4 no-scrollbar">
         <div className="Header h-14">
-          <div className="Home left-[15px] top-[15px] text-white text-lg font-bold">
+          <Link
+            to="/challenge"
+            className="Home left-[15px] top-[15px] text-white text-lg font-bold"
+          >
             Home
-          </div>
+          </Link>
           <div className="Divider h-px left-0 top-[52px] flex-col justify-end items-start inline-flex">
             <div className="Divider h-px bg-gray-200" />
             <div className="Frame1 self-stretch px-3.5 py-1" />

@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss'
 const plugin = require('tailwindcss/plugin')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',

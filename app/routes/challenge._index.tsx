@@ -1,4 +1,4 @@
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { LinksFunction, json } from "@remix-run/node";
 
 import stylesUrl from "~/styles/index.css";
@@ -43,6 +43,7 @@ export default function Challenge() {
               <div className="S text-slate-500 text-base font-medium">
                 From {formatDate(startDate)} to {formatDate(endDate)}
               </div>
+              <Link to={`/challenge/${id}/record`}>Add Your record</Link>
             </div>
             {records.map(({ id, author, date, points, prove }) => {
               return (

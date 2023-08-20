@@ -52,7 +52,7 @@ export default function Add() {
   const actionData = useActionData<typeof action>();
 
   return (
-    <div className="block w-[40rem] rounded-lg bg-black px-6 py-16 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+    <div className="block w-[40rem] rounded-lg px-6 py-16 bg-neutral-900 ring-2">
       <form method="post" className="">
         <InputField
           name="start_date"
@@ -67,24 +67,24 @@ export default function Add() {
           placeholder="End Date"
         />
         <InputField name="name" type="text" label="Name" />
-        <div className="relative mb-6 text-red-600">
+        <div className="relative mb-6">
+          <label
+            htmlFor="description"
+            className="block mb-2 text-sm font-medium text-white"
+          >
+            Describe your challenge
+          </label>
           <textarea
             name="description"
             placeholder="Add a description to your challenge ..."
-            className="peer block min-h-[auto] w-full rounded px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-red-600 dark:placeholder:text-red-600 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
-          <label className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-red-600 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-red-600 dark:peer-focus:text-primary">
-            Description
-          </label>
         </div>
         {actionData?.formError && (
           <p style={{ color: "red" }}>{actionData.formError}</p>
         )}
-        <div className="mt-20">
-          <button
-            type="submit"
-            className="dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded bg-[#34495e] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-          >
+        <div className="mt-16">
+          <button type="submit" className="w-full bg-[#34495e] rounded-lg p-2">
             ADD CHALLENGE
           </button>
         </div>

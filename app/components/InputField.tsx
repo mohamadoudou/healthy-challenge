@@ -9,20 +9,21 @@ interface Props {
 
 export default function InputField({ name, type, label, placeholder }: Props) {
   return (
-    <div className="relative mb-6 text-red-600">
+    <div className="mb-6">
+      <label
+        htmlFor={name}
+        className="block mb-2 text-sm font-medium  text-white"
+      >
+        {label}
+      </label>
       <input
         id={name}
         name={name}
         type={type}
         placeholder={placeholder}
-        className="peer block min-h-[auto] w-full rounded px-3 py-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-red-600 dark:placeholder:text-red-600 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        required
       />
-      <label
-        htmlFor={name}
-        className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-red-600 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-red-600 dark:peer-focus:text-primary"
-      >
-        {label}
-      </label>
     </div>
   );
 }
