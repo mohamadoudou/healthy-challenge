@@ -43,7 +43,12 @@ export default function Challenge() {
               <div className="S text-slate-500 text-base font-medium">
                 From {formatDate(startDate)} to {formatDate(endDate)}
               </div>
-              <Link to={`/challenge/${id}/record`}>Add Your record</Link>
+              <Link
+                to={`/challenge/${id}/record`}
+                className="ml-auto text-red-600 underline underline-offset-4"
+              >
+                Details & Add Your record
+              </Link>
             </div>
             {records.map(({ id, author, date, points, prove }) => {
               return (

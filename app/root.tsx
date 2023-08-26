@@ -30,7 +30,7 @@ function Document({
         <title>{title}</title>
         <Links />
       </head>
-      <body className="h-screen bg">
+      <body className="h-screen bg dark">
         {children}
         <ScrollRestoration />
         <Scripts />

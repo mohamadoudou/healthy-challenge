@@ -24,6 +24,12 @@ export default function Feed() {
   const { records, challengeId } = useLoaderData<typeof loader>();
   return (
     <main>
+      <Link
+        to={`/challenge/${challengeId}/addRecord`}
+        className="text-red-600 underline underline-offset-4 sticky"
+      >
+        Add Your record
+      </Link>
       <ul>
         {records.map(({ id, author, date, points, prove }) => {
           return (
@@ -38,7 +44,6 @@ export default function Feed() {
           );
         })}
       </ul>
-      <Link to={`/challenge/${challengeId}/addRecord`}> Add Your records </Link>
     </main>
   );
 }
