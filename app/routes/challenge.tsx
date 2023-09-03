@@ -120,9 +120,23 @@ export default function Challenge() {
             <div className="Frame1 self-stretch px-3.5 py-1" />
           </div>
         </div>
-        <div className="Spacer w-fit h-2.5 pb-2 bg-gray-50 justify-center items-center inline-flex">
-          <div className="Divider h-px bg-gray-200" />
+        <div className="flex w-full justify-around">
+          <Link
+            to={"/"}
+            className="underline underline-offset-4 text-center active:text-red-600 hover:bg-gray-400 flex-1 p-4"
+          >
+            Challenges
+          </Link>
+          <Link
+            to={"/"}
+            className="underline underline-offset-4 text-center active:text-red-600 hover:bg-gray-400 flex-1 p-4"
+          >
+            Ranks
+          </Link>
         </div>
+        {/* <div className="Spacer w-fit h-2.5 pb-2 bg-gray-50 justify-center items-center inline-flex">
+          <div className="Divider h-px bg-gray-200" />
+        </div> */}
         <Outlet />
       </div>
     </>
